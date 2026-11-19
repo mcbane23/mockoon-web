@@ -17,6 +17,8 @@ Mockoon team.
 - Node.js 22 or newer
 - [pnpm](https://pnpm.io) 10
 
+or only Docker, see [Docker](#docker).
+
 ## Running
 
 ```sh
@@ -37,6 +39,45 @@ The password is stored in /home/me/maketa/data/auth.json
 ```
 
 Open the address in a browser on any machine in the network and log in with that password.
+
+### Docker
+
+An image is published to the GitHub Container Registry on every merge to `main`
+(`ghcr.io/mcbane23/mockoon-web:latest`) and for every `v*` tag (for example `:1.2.0`), for
+`linux/amd64` and `linux/arm64`.
+
+The easiest way is the [`docker-compose.yml`](docker-compose.yml) in this repository:
+
+```sh
+curl -O https://raw.githubusercontent.com/mcbane23/mockoon-web/main/docker-compose.yml
+docker compose up -d
+docker compose logs maketa   # the generated password is printed on the first start
+```
+
+Then open `http://<address of the machine>:4400`. The address printed in the logs is the address
+inside the container; use the address of the machine running Docker instead. Update with
+`docker compose pull && docker compose up -d`.
+
+Or with `docker run`:
+
+```sh
+docker run -d --name maketa -p 4400:4400 -p 3001-3020:3001-3020 \
+  -v maketa-data:/data ghcr.io/mcbane23/mockoon-web:latest
+```
+
+Things to know:
+
+- All data (`settings.json`, `auth.json`, environments) is in `/data`, kept in the `maketa-data`
+  volume. To keep it in a folder on the host, mount that folder on `/data` instead; it must be
+  writable by uid 1000 (the `node` user the container runs as).
+- Mock APIs are only reachable on the ports that are published. The compose file publishes
+  3001–3020, the ports new environments get; change the range if your environments use others.
+- The configuration variables below work as environment variables of the container.
+  `MAKETA_HOST`, `MAKETA_PORT` and `MAKETA_DATA_DIR` are already set and rarely need changing.
+- **Open** takes a path inside the container, so it only sees files under `/data` or in folders
+  you mount. **Import** uploads from the browser and needs nothing extra.
+
+To build the image yourself: `docker build -t maketa .`
 
 ### Development
 
