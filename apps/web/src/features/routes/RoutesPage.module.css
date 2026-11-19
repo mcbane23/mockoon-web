@@ -1,0 +1,33 @@
+.page {
+  display: flex;
+  height: 100%;
+  min-width: 0;
+}
+
+.tree {
+  flex: none;
+  height: 100%;
+  min-width: 200px;
+  background: var(--panel);
+}
+
+.resizer {
+  flex: none;
+  width: 5px;
+  margin: 0 -2px;
+  border-left: 1px solid var(--border);
+  cursor: col-resize;
+  z-index: 1;
+}
+
+.resizer:hover,
+.resizer:focus-visible {
+  background: var(--accent-soft);
+}
+
+.editor {
+  flex: 1 1 auto;
+  min-width: 0;
+  height: 100%;
+  overflow: auto;
+}

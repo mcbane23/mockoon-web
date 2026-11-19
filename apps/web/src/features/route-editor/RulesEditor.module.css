@@ -1,0 +1,52 @@
+.rules {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.rule {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 0;
+}
+
+.handle {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 30px;
+  color: var(--muted);
+  cursor: grab;
+  touch-action: none;
+}
+
+.target {
+  flex: 0 0 150px;
+}
+
+.modifier {
+  flex: 1 1 180px;
+  min-width: 80px;
+}
+
+.operatorSelect {
+  flex: 0 0 170px;
+}
+
+.value {
+  flex: 1 1 160px;
+  min-width: 80px;
+}
+
+.operator {
+  display: flex;
+  justify-content: center;
+  padding: 2px 0;
+}
+
+.error {
+  padding-left: 26px;
+}
