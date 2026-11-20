@@ -101,6 +101,12 @@ The end-to-end tests need a browser once: `pnpm --filter @maketa/e2e exec playwr
 
 All variables are optional.
 
+If the start fails with `EACCES: permission denied` on the port, the operating system has reserved
+that port (on Windows, Hyper-V, WSL and Docker Desktop reserve port ranges; list them with
+`netsh interface ipv4 show excludedportrange protocol=tcp`). Pick another port with `MAKETA_PORT`,
+for example `$env:MAKETA_PORT=8480; pnpm start` in PowerShell or `MAKETA_PORT=8480 pnpm start` in a
+Unix shell.
+
 | Variable               | Default   | Meaning                                                                                                                                                                           |
 | ---------------------- | --------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `MAKETA_PORT`          | `4400`    | Port of the interface and its API.                                                                                                                                                |
