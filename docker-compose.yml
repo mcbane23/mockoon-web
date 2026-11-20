@@ -1,11 +1,11 @@
-# Stubhouse with Docker Compose:
+# Mockpit with Docker Compose:
 #   docker compose up -d
-#   docker compose logs stubhouse   # the generated password is printed on the first start
+#   docker compose logs mockpit   # the generated password is printed on the first start
 # Then open http://<this machine>:3300
 services:
-  stubhouse:
+  mockpit:
     image: ghcr.io/mcbane23/mockoon-web:latest
-    container_name: stubhouse
+    container_name: mockpit
     restart: unless-stopped
     ports:
       # the interface and its API
@@ -14,14 +14,14 @@ services:
       - '3001-3020:3001-3020'
     environment:
       # Set a fixed password here, or leave it out and read the generated one from the logs
-      # STUBHOUSE_PASSWORD: change-me
-      STUBHOUSE_AUTH: 'on'
+      # MOCKPIT_PASSWORD: change-me
+      MOCKPIT_AUTH: 'on'
     volumes:
       # settings, password and the environment JSON files
-      - stubhouse-data:/data
+      - mockpit-data:/data
       # To keep the files in a folder next to this file instead, use the line below
       # (the folder must be writable by uid 1000: mkdir data && sudo chown 1000:1000 data)
       # - ./data:/data
 
 volumes:
-  stubhouse-data:
+  mockpit-data:

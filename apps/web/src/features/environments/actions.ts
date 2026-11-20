@@ -1,5 +1,5 @@
 import { BuildDemoEnvironment } from '@mockoon/commons';
-import type { EnvironmentDetail } from '@stubhouse/shared';
+import type { EnvironmentDetail } from '@mockpit/shared';
 import { api, errorText } from '../../api/client';
 import { copyText } from '../../lib/clipboard';
 import { toastError, toastInfo, useAppStore } from '../../store/app-store';

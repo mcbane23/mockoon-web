@@ -1,4 +1,4 @@
-import type { ApiErrorBody } from '@stubhouse/shared';
+import type { ApiErrorBody } from '@mockpit/shared';
 
 export class ApiError extends Error {
   constructor(

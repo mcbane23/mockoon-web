@@ -1,5 +1,5 @@
 /**
- * crypto.randomUUID only exists in secure contexts (HTTPS or localhost). Stubhouse is served over
+ * crypto.randomUUID only exists in secure contexts (HTTPS or localhost). Mockpit is served over
  * plain HTTP on the local network, and @mockoon/commons calls window.crypto.randomUUID() to build
  * routes and responses, so provide it when missing. getRandomValues works in every context.
  */

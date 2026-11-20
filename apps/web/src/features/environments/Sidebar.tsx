@@ -1,4 +1,4 @@
-import type { EnvironmentSummary } from '@stubhouse/shared';
+import type { EnvironmentSummary } from '@mockpit/shared';
 import { useState } from 'react';
 import { Link, NavLink, useLocation } from 'react-router-dom';
 import { api } from '../../api/client';

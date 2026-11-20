@@ -1,5 +1,5 @@
 import type { FastifyInstance } from 'fastify';
-import type { AppSettings, AppSettingsPatch } from '@stubhouse/shared';
+import type { AppSettings, AppSettingsPatch } from '@mockpit/shared';
 import type { App } from '../app.js';
 import { SETTINGS_LIMITS } from '../settings-store.js';
 

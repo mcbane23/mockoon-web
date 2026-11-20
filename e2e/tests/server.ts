@@ -21,7 +21,7 @@ export function freePort(): Promise<number> {
   });
 }
 
-export class StubhouseServer {
+export class MockpitServer {
   private child: ChildProcess | null = null;
   output = '';
 
@@ -41,9 +41,9 @@ export class StubhouseServer {
       env: {
         ...process.env,
         NODE_ENV: 'production',
-        STUBHOUSE_HOST: '127.0.0.1',
-        STUBHOUSE_PORT: String(this.port),
-        STUBHOUSE_DATA_DIR: this.dataDir,
+        MOCKPIT_HOST: '127.0.0.1',
+        MOCKPIT_PORT: String(this.port),
+        MOCKPIT_DATA_DIR: this.dataDir,
         ...this.extraEnv,
       },
       stdio: ['ignore', 'pipe', 'pipe'],
@@ -94,19 +94,19 @@ export class StubhouseServer {
 
 type Fixtures = {
   /** Start a server with a fresh data directory; stopped and cleaned up after the test. */
-  startServer: (extraEnv?: Record<string, string>) => Promise<StubhouseServer>;
+  startServer: (extraEnv?: Record<string, string>) => Promise<MockpitServer>;
   /** A server without a password, already started. */
-  server: StubhouseServer;
+  server: MockpitServer;
 };
 
 export const test = base.extend<Fixtures>({
   // Playwright requires an object pattern as the first argument of a fixture
   // eslint-disable-next-line no-empty-pattern
   startServer: async ({}, use) => {
-    const servers: StubhouseServer[] = [];
+    const servers: MockpitServer[] = [];
     await use(async (extraEnv = {}) => {
-      const dataDir = await fs.mkdtemp(path.join(os.tmpdir(), 'stubhouse-e2e-'));
-      const server = new StubhouseServer(dataDir, await freePort(), extraEnv);
+      const dataDir = await fs.mkdtemp(path.join(os.tmpdir(), 'mockpit-e2e-'));
+      const server = new MockpitServer(dataDir, await freePort(), extraEnv);
       servers.push(server);
       await server.start();
 

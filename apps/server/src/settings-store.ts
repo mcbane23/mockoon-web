@@ -1,6 +1,6 @@
 import fs from 'node:fs/promises';
 import path from 'node:path';
-import type { AppSettings, Settings, SettingsLimits } from '@stubhouse/shared';
+import type { AppSettings, Settings, SettingsLimits } from '@mockpit/shared';
 import { isENOENT, writeFileAtomic } from './fs-utils.js';
 import type { Logger } from './logger.js';
 

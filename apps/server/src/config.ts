@@ -7,11 +7,11 @@ export type Config = {
   host: string;
   /** Absolute path of the data directory. */
   dataDir: string;
-  /** Value of STUBHOUSE_PASSWORD, or null when not set. */
+  /** Value of MOCKPIT_PASSWORD, or null when not set. */
   envPassword: string | null;
-  /** STUBHOUSE_AUTH. */
+  /** MOCKPIT_AUTH. */
   auth: 'on' | 'off';
-  /** STUBHOUSE_ALLOWED_HOSTS, lower-cased. */
+  /** MOCKPIT_ALLOWED_HOSTS, lower-cased. */
   allowedHosts: string[];
   /** Development mode: also accepts requests coming through the Vite dev server. */
   dev: boolean;
@@ -29,13 +29,13 @@ export class ConfigError extends Error {}
 const ENV_NAMES = ['PORT', 'HOST', 'DATA_DIR', 'PASSWORD', 'AUTH', 'ALLOWED_HOSTS'] as const;
 
 /**
- * Reads the STUBHOUSE_* variables. The application used to be called Maketa, so a MAKETA_*
- * variable is still accepted when its STUBHOUSE_* counterpart is not set.
+ * Reads the MOCKPIT_* variables. The application used to be called Maketa, so a MAKETA_*
+ * variable is still accepted when its MOCKPIT_* counterpart is not set.
  */
 function readEnv(env: Record<string, string | undefined>) {
   const values: Record<string, string | undefined> = {};
   for (const name of ENV_NAMES) {
-    values[`STUBHOUSE_${name}`] = env[`STUBHOUSE_${name}`] ?? env[`MAKETA_${name}`];
+    values[`MOCKPIT_${name}`] = env[`MOCKPIT_${name}`] ?? env[`MAKETA_${name}`];
   }
   return values;
 }
@@ -45,26 +45,24 @@ export function loadConfig(
   cwd: string = process.cwd(),
 ): Config {
   const env = readEnv(processEnv);
-  const rawPort = env.STUBHOUSE_PORT?.trim();
+  const rawPort = env.MOCKPIT_PORT?.trim();
   const port = rawPort ? Number(rawPort) : 3300;
   if (!Number.isInteger(port) || port < 1 || port > 65535) {
-    throw new ConfigError(
-      `STUBHOUSE_PORT must be an integer between 1 and 65535 (got "${rawPort}")`,
-    );
+    throw new ConfigError(`MOCKPIT_PORT must be an integer between 1 and 65535 (got "${rawPort}")`);
   }
 
-  const auth = (env.STUBHOUSE_AUTH?.trim() || 'on').toLowerCase();
+  const auth = (env.MOCKPIT_AUTH?.trim() || 'on').toLowerCase();
   if (auth !== 'on' && auth !== 'off') {
-    throw new ConfigError(`STUBHOUSE_AUTH must be "on" or "off" (got "${env.STUBHOUSE_AUTH}")`);
+    throw new ConfigError(`MOCKPIT_AUTH must be "on" or "off" (got "${env.MOCKPIT_AUTH}")`);
   }
 
   return {
     port,
-    host: env.STUBHOUSE_HOST?.trim() || '0.0.0.0',
-    dataDir: path.resolve(cwd, env.STUBHOUSE_DATA_DIR?.trim() || './data'),
-    envPassword: env.STUBHOUSE_PASSWORD ? env.STUBHOUSE_PASSWORD : null,
+    host: env.MOCKPIT_HOST?.trim() || '0.0.0.0',
+    dataDir: path.resolve(cwd, env.MOCKPIT_DATA_DIR?.trim() || './data'),
+    envPassword: env.MOCKPIT_PASSWORD ? env.MOCKPIT_PASSWORD : null,
     auth,
-    allowedHosts: (env.STUBHOUSE_ALLOWED_HOSTS ?? '')
+    allowedHosts: (env.MOCKPIT_ALLOWED_HOSTS ?? '')
       .split(',')
       .map((host) => host.trim().toLowerCase())
       .filter(Boolean),

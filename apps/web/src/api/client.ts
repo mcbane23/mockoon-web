@@ -11,7 +11,7 @@ import type {
   LogEntry,
   UiStatePatch,
   UpdateEnvironmentResponse,
-} from '@stubhouse/shared';
+} from '@mockpit/shared';
 
 export class ApiClientError extends Error {
   constructor(

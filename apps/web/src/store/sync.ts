@@ -1,4 +1,4 @@
-import type { ServerEvent } from '@stubhouse/shared';
+import type { ServerEvent } from '@mockpit/shared';
 import { errorText } from '../api/client';
 import { connectEvents } from '../api/events';
 import { S } from '../strings';

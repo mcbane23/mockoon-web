@@ -1,9 +1,9 @@
 # Third-party notices
 
-Stubhouse uses the open-source engine of [Mockoon](https://mockoon.com) to load, migrate and run
-environments. Stubhouse is not affiliated with or endorsed by the Mockoon team. "Mockoon" is a
+Mockpit uses the open-source engine of [Mockoon](https://mockoon.com) to load, migrate and run
+environments. Mockpit is not affiliated with or endorsed by the Mockoon team. "Mockoon" is a
 registered trademark of its owner (EU trademark 018918009) and is used here only to describe
-compatibility. Stubhouse does not use the Mockoon logo.
+compatibility. Mockpit does not use the Mockoon logo.
 
 ## @mockoon/commons and @mockoon/commons-server
 

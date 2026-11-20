@@ -32,7 +32,7 @@ importers:
       '@fastify/static':
         specifier: ^10.1.12
         version: 10.1.12
-      '@stubhouse/shared':
+      '@mockpit/shared':
         specifier: workspace:*
         version: link:../../packages/shared
       '@mockoon/commons':
@@ -75,7 +75,7 @@ importers:
       '@dnd-kit/utilities':
         specifier: ^3.2.2
         version: 3.2.2(react@19.3.1)
-      '@stubhouse/shared':
+      '@mockpit/shared':
         specifier: workspace:*
         version: link:../../packages/shared
       '@mockoon/commons':

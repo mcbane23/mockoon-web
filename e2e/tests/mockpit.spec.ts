@@ -159,11 +159,11 @@ test('login: a password protects the interface and the session survives a reload
   page,
   startServer,
 }) => {
-  const server = await startServer({ STUBHOUSE_PASSWORD: 'test' });
+  const server = await startServer({ MOCKPIT_PASSWORD: 'test' });
   await page.goto(server.url);
 
   await expect(page).toHaveURL(/\/login$/);
-  await expect(page.getByRole('heading', { name: 'Log in to Stubhouse' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Log in to Mockpit' })).toBeVisible();
 
   await page.getByLabel('Password').fill('wrong');
   await page.getByRole('button', { name: 'Log in' }).click();

@@ -1,5 +1,5 @@
 import { EventEmitter } from 'node:events';
-import type { ServerEvent } from '@stubhouse/shared';
+import type { ServerEvent } from '@mockpit/shared';
 
 export type ServerEventListener = (event: ServerEvent) => void;
 

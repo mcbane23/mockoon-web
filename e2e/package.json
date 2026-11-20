@@ -1,5 +1,5 @@
 {
-  "name": "@stubhouse/e2e",
+  "name": "@mockpit/e2e",
   "version": "0.1.0",
   "private": true,
   "type": "module",

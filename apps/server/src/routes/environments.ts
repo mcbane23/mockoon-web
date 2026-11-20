@@ -4,7 +4,7 @@ import type {
   UiStatePatch,
   UpdateEnvironmentRequest,
   UpdateEnvironmentResponse,
-} from '@stubhouse/shared';
+} from '@mockpit/shared';
 import type { App } from '../app.js';
 
 const uuidParams = {

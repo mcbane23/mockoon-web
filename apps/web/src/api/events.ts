@@ -1,4 +1,4 @@
-import type { ServerEvent } from '@stubhouse/shared';
+import type { ServerEvent } from '@mockpit/shared';
 
 export type EventsHandlers = {
   onEvent: (event: ServerEvent) => void;

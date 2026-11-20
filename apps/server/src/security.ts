@@ -8,7 +8,7 @@ import { isLoopbackHost, type Config } from './config.js';
 import { ApiError } from './errors.js';
 import { isENOENT, writeFileAtomic } from './fs-utils.js';
 
-export const SESSION_COOKIE = 'stubhouse_session';
+export const SESSION_COOKIE = 'mockpit_session';
 /** Browsers cap cookie lifetime at about 400 days. */
 export const SESSION_MAX_AGE_SECONDS = 400 * 24 * 60 * 60;
 const LOGIN_WINDOW_MS = 60_000;
@@ -40,7 +40,7 @@ export const sessionToken = (auth: Pick<AuthState, 'password' | 'sessionSecret'>
 
 /**
  * Decide whether the password is active and where it comes from:
- * STUBHOUSE_PASSWORD, then data/auth.json, then a generated one written to data/auth.json.
+ * MOCKPIT_PASSWORD, then data/auth.json, then a generated one written to data/auth.json.
  */
 export async function resolveAuth(config: Config): Promise<AuthState> {
   const authFilePath = path.join(config.dataDir, 'auth.json');
@@ -194,7 +194,7 @@ export function registerSecurity(fastify: FastifyInstance, config: Config, auth:
       throw new ApiError(
         403,
         'FORBIDDEN_HOST',
-        `Host "${host ?? ''}" is not allowed. Open the UI through an IP address or the machine name, or add this host name to STUBHOUSE_ALLOWED_HOSTS.`,
+        `Host "${host ?? ''}" is not allowed. Open the UI through an IP address or the machine name, or add this host name to MOCKPIT_ALLOWED_HOSTS.`,
       );
     }
 

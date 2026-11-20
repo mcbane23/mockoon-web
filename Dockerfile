@@ -14,22 +14,22 @@ COPY apps/web/package.json apps/web/
 COPY packages/shared/package.json packages/shared/
 COPY e2e/package.json e2e/
 RUN --mount=type=cache,id=pnpm,target=/pnpm/store \
-    pnpm install --frozen-lockfile --filter @stubhouse/server... --filter @stubhouse/web...
+    pnpm install --frozen-lockfile --filter @mockpit/server... --filter @mockpit/web...
 
 COPY . .
-RUN pnpm --filter @stubhouse/server... --filter @stubhouse/web build
+RUN pnpm --filter @mockpit/server... --filter @mockpit/web build
 
 # Server with production dependencies only, next to the built UI
 RUN --mount=type=cache,id=pnpm,target=/pnpm/store \
-    pnpm --filter @stubhouse/server deploy --prod --legacy /out/apps/server \
+    pnpm --filter @mockpit/server deploy --prod --legacy /out/apps/server \
  && cp -r apps/web/dist /out/apps/web-dist
 
 # ---- runtime ----
 FROM node:22-alpine
 ENV NODE_ENV=production \
-    STUBHOUSE_HOST=0.0.0.0 \
-    STUBHOUSE_PORT=3300 \
-    STUBHOUSE_DATA_DIR=/data
+    MOCKPIT_HOST=0.0.0.0 \
+    MOCKPIT_PORT=3300 \
+    MOCKPIT_DATA_DIR=/data
 WORKDIR /app
 COPY --from=build --chown=node:node /out/apps/server apps/server
 COPY --from=build --chown=node:node /out/apps/web-dist apps/web/dist
@@ -40,5 +40,5 @@ VOLUME ["/data"]
 # 3300: the UI and its API; 3001 and up: the mock APIs
 EXPOSE 3300 3001-3020
 HEALTHCHECK --interval=30s --timeout=5s --start-period=10s \
-  CMD wget -q -O /dev/null "http://127.0.0.1:${STUBHOUSE_PORT}/" || exit 1
+  CMD wget -q -O /dev/null "http://127.0.0.1:${MOCKPIT_PORT}/" || exit 1
 CMD ["node", "apps/server/dist/index.js"]

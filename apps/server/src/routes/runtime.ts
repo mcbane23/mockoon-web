@@ -1,5 +1,5 @@
 import type { FastifyInstance } from 'fastify';
-import type { EnvironmentSummary } from '@stubhouse/shared';
+import type { EnvironmentSummary } from '@mockpit/shared';
 import type { App } from '../app.js';
 
 const schema = {
