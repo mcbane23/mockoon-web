@@ -141,9 +141,7 @@ export function Sidebar({ shell }: { shell: ShellContext }) {
     >
       <div className={styles.brand}>
         <Link to="/" className={styles.brandLink}>
-          <span className={styles.logo} aria-hidden="true">
-            M
-          </span>
+          <img className={styles.logo} src="/favicon.svg" alt="" width={24} height={24} />
           <span className={styles.label}>{S.appName}</span>
         </Link>
       </div>

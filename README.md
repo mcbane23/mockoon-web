@@ -1,3 +1,5 @@
+<img src="apps/web/public/favicon.svg" alt="Mockpit logo" width="72" height="72" />
+
 # Mockpit
 
 Mockpit is a web interface for building and running mock APIs. You create an environment, add
