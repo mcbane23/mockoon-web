@@ -7,7 +7,13 @@ import { App } from './App';
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <BrowserRouter>
+    {/*
+      The URL selects what is being edited (environment, route, response). Without this the
+      router updates in a low-priority transition, so the previous editor stays on screen and
+      keeps accepting input for a moment after the selection changed, and that input would be
+      saved to the wrong route.
+    */}
+    <BrowserRouter useTransitions={false}>
       <App />
     </BrowserRouter>
   </StrictMode>,

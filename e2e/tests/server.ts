@@ -142,6 +142,8 @@ export async function createEnvironment(page: Page, name: string, port: number):
 export async function addRoute(page: Page, endpoint: string, body?: string): Promise<void> {
   await page.getByRole('button', { name: 'Add route or folder' }).click();
   await page.getByRole('menuitem', { name: 'HTTP route' }).click();
+  // the editor of the new route puts the cursor in its path field
+  await expect(page.getByPlaceholder('users/:id')).toBeFocused();
   await page.getByPlaceholder('users/:id').fill(endpoint);
   if (body !== undefined) {
     await page.getByRole('textbox', { name: 'Response body' }).fill(body);

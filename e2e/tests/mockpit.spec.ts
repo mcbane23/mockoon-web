@@ -178,3 +178,28 @@ test('login: a password protects the interface and the session survives a reload
   await expect(page.getByRole('heading', { name: 'Mock APIs in your browser' })).toBeVisible();
   await expect(page).not.toHaveURL(/\/login/);
 });
+
+test('adding a route: edits made right away go to the new route, also on a slow machine', async ({
+  page,
+  server,
+}) => {
+  const mockPort = await freePort();
+  // a slow browser widens the moment between the click and the editor of the new route
+  const cdp = await page.context().newCDPSession(page);
+  await cdp.send('Emulation.setCPUThrottlingRate', { rate: 8 });
+  await page.goto(server.url);
+  await page.getByRole('button', { name: 'New environment' }).click();
+  await createEnvironment(page, 'Slow', mockPort);
+
+  // on purpose without waiting for the new editor, unlike the addRoute helper
+  await page.getByRole('button', { name: 'Add route or folder' }).click();
+  await page.getByRole('menuitem', { name: 'HTTP route' }).click();
+  await page.getByPlaceholder('users/:id').fill('fresh');
+  await page.waitForTimeout(400);
+  await page.getByRole('textbox', { name: 'Response body' }).fill('{"route":"fresh"}');
+  await expectSaved(page);
+  await startOpenEnvironment(page);
+
+  const response = await page.request.get(`http://127.0.0.1:${mockPort}/fresh`);
+  expect(await response.json()).toEqual({ route: 'fresh' });
+});
