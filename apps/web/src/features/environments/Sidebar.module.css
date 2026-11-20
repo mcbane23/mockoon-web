@@ -32,15 +32,10 @@
 }
 
 .logo {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
+  display: block;
   width: 24px;
   height: 24px;
-  border-radius: 6px;
-  background: var(--accent);
-  color: var(--accent-contrast);
-  font-size: 13px;
+  flex: none;
 }
 
 .list {
