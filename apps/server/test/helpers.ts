@@ -91,7 +91,7 @@ export const waitForStatus = (bus: EventBus, uuid: string, status: string, timeo
 
 export async function makeConfig(overrides: Partial<Config> = {}): Promise<Config> {
   return {
-    port: 4400,
+    port: 3300,
     host: '127.0.0.1',
     dataDir: await tempDir(),
     envPassword: null,

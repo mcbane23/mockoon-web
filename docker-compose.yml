@@ -1,7 +1,7 @@
 # Maketa with Docker Compose:
 #   docker compose up -d
 #   docker compose logs maketa   # the generated password is printed on the first start
-# Then open http://<this machine>:4400
+# Then open http://<this machine>:3300
 services:
   maketa:
     image: ghcr.io/mcbane23/mockoon-web:latest
@@ -9,7 +9,7 @@ services:
     restart: unless-stopped
     ports:
       # the interface and its API
-      - '4400:4400'
+      - '3300:3300'
       # the mock APIs: environments get ports from 3001 up; widen the range if you need more
       - '3001-3020:3001-3020'
     environment:

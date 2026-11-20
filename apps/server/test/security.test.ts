@@ -19,7 +19,7 @@ type Options = {
 };
 
 const call = async (app: App, url: string, options: Options = {}) => {
-  const headers: Record<string, string> = { host: options.host ?? 'localhost:4400' };
+  const headers: Record<string, string> = { host: options.host ?? 'localhost:3300' };
   if (options.origin) {
     headers.origin = options.origin;
   }
@@ -51,7 +51,7 @@ const login = (app: App, password: string, options: Options = {}) =>
   call(app, '/api/auth/login', { method: 'POST', payload: { password }, ...options });
 
 const LAN = { host: '0.0.0.0' } as const;
-const LAN_HOST = '192.168.1.10:4400';
+const LAN_HOST = '192.168.1.10:3300';
 
 describe('without a password (loopback)', () => {
   it('rejects unknown Host names (DNS rebinding)', async () => {
@@ -67,14 +67,14 @@ describe('without a password (loopback)', () => {
     const app = await makeApp({ allowedHosts: ['maketa.lan'] });
     const machine = os.hostname();
     for (const host of [
-      '127.0.0.1:4400',
-      '192.168.1.10:4400',
-      '[::1]:4400',
-      'localhost:4400',
+      '127.0.0.1:3300',
+      '192.168.1.10:3300',
+      '[::1]:3300',
+      'localhost:3300',
       'localhost',
       machine,
-      `${machine.toUpperCase()}.local:4400`,
-      'maketa.lan:4400',
+      `${machine.toUpperCase()}.local:3300`,
+      'maketa.lan:3300',
       'MAKETA.LAN',
     ]) {
       expect((await call(app, '/api/state', { host })).status, host).toBe(200);
@@ -104,7 +104,7 @@ describe('Origin and Content-Type checks (both modes)', () => {
 
     const same = await call(open, '/api/environments', {
       method: 'POST',
-      origin: 'http://localhost:4400',
+      origin: 'http://localhost:3300',
       payload: {},
     });
     expect(same.status).toBe(201);
@@ -136,7 +136,7 @@ describe('Origin and Content-Type checks (both modes)', () => {
     const response = await app.fastify.inject({
       method: 'POST',
       url: '/api/environments',
-      headers: { host: 'localhost:4400', 'content-type': 'text/plain' },
+      headers: { host: 'localhost:3300', 'content-type': 'text/plain' },
       payload: '{"name":"x"}',
     });
     expect(response.statusCode).toBe(415);
@@ -298,7 +298,7 @@ describe('MAKETA_AUTH', () => {
     expect(loadConfig({ MAKETA_AUTH: 'off' }, '/tmp').auth).toBe('off');
     expect(loadConfig({}, '/tmp')).toMatchObject({
       auth: 'on',
-      port: 4400,
+      port: 3300,
       host: '0.0.0.0',
       dataDir: '/tmp/data',
       envPassword: null,

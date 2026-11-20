@@ -28,7 +28,7 @@ RUN --mount=type=cache,id=pnpm,target=/pnpm/store \
 FROM node:22-alpine
 ENV NODE_ENV=production \
     MAKETA_HOST=0.0.0.0 \
-    MAKETA_PORT=4400 \
+    MAKETA_PORT=3300 \
     MAKETA_DATA_DIR=/data
 WORKDIR /app
 COPY --from=build --chown=node:node /out/apps/server apps/server
@@ -36,8 +36,8 @@ COPY --from=build --chown=node:node /out/apps/web-dist apps/web/dist
 RUN mkdir -p /data && chown node:node /data
 USER node
 VOLUME ["/data"]
-# 4400: the UI and its API; 3001 and up: the mock APIs
-EXPOSE 4400 3001-3020
+# 3300: the UI and its API; 3001 and up: the mock APIs
+EXPOSE 3300 3001-3020
 HEALTHCHECK --interval=30s --timeout=5s --start-period=10s \
   CMD wget -q -O /dev/null "http://127.0.0.1:${MAKETA_PORT}/" || exit 1
 CMD ["node", "apps/server/dist/index.js"]

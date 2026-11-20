@@ -28,11 +28,11 @@ pnpm start
 ```
 
 On start the server prints the addresses of the interface (one for each network address of the
-machine, for example `http://192.168.1.10:4400`), the data directory and, on the very first start,
+machine, for example `http://192.168.1.10:3300`), the data directory and, on the very first start,
 a generated password:
 
 ```
-UI: http://192.168.1.10:4400
+UI: http://192.168.1.10:3300
 Data directory: /home/me/maketa/data
 Generated password: k3J9wQx7LmP2aZ8d
 The password is stored in /home/me/maketa/data/auth.json
@@ -54,14 +54,14 @@ docker compose up -d
 docker compose logs maketa   # the generated password is printed on the first start
 ```
 
-Then open `http://<address of the machine>:4400`. The address printed in the logs is the address
+Then open `http://<address of the machine>:3300`. The address printed in the logs is the address
 inside the container; use the address of the machine running Docker instead. Update with
 `docker compose pull && docker compose up -d`.
 
 Or with `docker run`:
 
 ```sh
-docker run -d --name maketa -p 4400:4400 -p 3001-3020:3001-3020 \
+docker run -d --name maketa -p 3300:3300 -p 3001-3020:3001-3020 \
   -v maketa-data:/data ghcr.io/mcbane23/mockoon-web:latest
 ```
 
@@ -85,7 +85,7 @@ To build the image yourself: `docker build -t maketa .`
 pnpm dev
 ```
 
-starts the server on port 4400 (bound to `127.0.0.1`, without a password) and the Vite dev server
+starts the server on port 3300 (bound to `127.0.0.1`, without a password) and the Vite dev server
 on <http://localhost:5173>.
 
 | Command       | What it does                                                |
@@ -109,7 +109,7 @@ Unix shell.
 
 | Variable               | Default   | Meaning                                                                                                                                                                           |
 | ---------------------- | --------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `MAKETA_PORT`          | `4400`    | Port of the interface and its API.                                                                                                                                                |
+| `MAKETA_PORT`          | `3300`    | Port of the interface and its API.                                                                                                                                                |
 | `MAKETA_HOST`          | `0.0.0.0` | Address the interface listens on. The default is every network address, which makes it reachable in the local network. `127.0.0.1` limits it to the machine itself.               |
 | `MAKETA_DATA_DIR`      | `./data`  | Where `settings.json`, `auth.json` and the environments created by Maketa are stored. Relative to the working directory.                                                          |
 | `MAKETA_PASSWORD`      | empty     | Password of the interface. Wins over the password in `auth.json`.                                                                                                                 |

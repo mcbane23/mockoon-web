@@ -20,8 +20,8 @@ describe('validation', () => {
       expect(validatePort(value), value).not.toBeNull();
     }
     // must not be the port of the UI
-    expect(validatePort('4400', 4400)).toContain('4400');
-    expect(validatePort('4401', 4400)).toBeNull();
+    expect(validatePort('3300', 3300)).toContain('3300');
+    expect(validatePort('3301', 3300)).toBeNull();
   });
 
   it('name', () => {
