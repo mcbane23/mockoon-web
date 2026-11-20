@@ -1,4 +1,4 @@
-import type { LogEntry } from '@maketa/shared';
+import type { LogEntry } from '@mockpit/shared';
 import { create } from 'zustand';
 import { api } from '../api/client';
 

@@ -21,7 +21,7 @@ export function freePort(): Promise<number> {
   });
 }
 
-export class MaketaServer {
+export class MockpitServer {
   private child: ChildProcess | null = null;
   output = '';
 
@@ -41,9 +41,9 @@ export class MaketaServer {
       env: {
         ...process.env,
         NODE_ENV: 'production',
-        MAKETA_HOST: '127.0.0.1',
-        MAKETA_PORT: String(this.port),
-        MAKETA_DATA_DIR: this.dataDir,
+        MOCKPIT_HOST: '127.0.0.1',
+        MOCKPIT_PORT: String(this.port),
+        MOCKPIT_DATA_DIR: this.dataDir,
         ...this.extraEnv,
       },
       stdio: ['ignore', 'pipe', 'pipe'],
@@ -94,19 +94,19 @@ export class MaketaServer {
 
 type Fixtures = {
   /** Start a server with a fresh data directory; stopped and cleaned up after the test. */
-  startServer: (extraEnv?: Record<string, string>) => Promise<MaketaServer>;
+  startServer: (extraEnv?: Record<string, string>) => Promise<MockpitServer>;
   /** A server without a password, already started. */
-  server: MaketaServer;
+  server: MockpitServer;
 };
 
 export const test = base.extend<Fixtures>({
   // Playwright requires an object pattern as the first argument of a fixture
   // eslint-disable-next-line no-empty-pattern
   startServer: async ({}, use) => {
-    const servers: MaketaServer[] = [];
+    const servers: MockpitServer[] = [];
     await use(async (extraEnv = {}) => {
-      const dataDir = await fs.mkdtemp(path.join(os.tmpdir(), 'maketa-e2e-'));
-      const server = new MaketaServer(dataDir, await freePort(), extraEnv);
+      const dataDir = await fs.mkdtemp(path.join(os.tmpdir(), 'mockpit-e2e-'));
+      const server = new MockpitServer(dataDir, await freePort(), extraEnv);
       servers.push(server);
       await server.start();
 
@@ -142,6 +142,8 @@ export async function createEnvironment(page: Page, name: string, port: number):
 export async function addRoute(page: Page, endpoint: string, body?: string): Promise<void> {
   await page.getByRole('button', { name: 'Add route or folder' }).click();
   await page.getByRole('menuitem', { name: 'HTTP route' }).click();
+  // the editor of the new route puts the cursor in its path field
+  await expect(page.getByPlaceholder('users/:id')).toBeFocused();
   await page.getByPlaceholder('users/:id').fill(endpoint);
   if (body !== undefined) {
     await page.getByRole('textbox', { name: 'Response body' }).fill(body);

@@ -1,4 +1,4 @@
-import type { AppSettingsPatch } from '@maketa/shared';
+import type { AppSettingsPatch } from '@mockpit/shared';
 import { Link } from 'react-router-dom';
 import { api, errorText } from '../../api/client';
 import { Button } from '../../components/Button';

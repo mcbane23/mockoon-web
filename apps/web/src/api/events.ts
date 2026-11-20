@@ -1,4 +1,4 @@
-import type { ServerEvent } from '@maketa/shared';
+import type { ServerEvent } from '@mockpit/shared';
 
 export type EventsHandlers = {
   onEvent: (event: ServerEvent) => void;

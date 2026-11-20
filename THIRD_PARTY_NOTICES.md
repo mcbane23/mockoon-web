@@ -1,8 +1,9 @@
 # Third-party notices
 
-Maketa uses the open-source engine of [Mockoon](https://mockoon.com) to load, migrate and run
-environments. Maketa is not affiliated with or endorsed by the Mockoon team. "Mockoon" is a name
-of its respective owner and is used here only to describe compatibility.
+Mockpit uses the open-source engine of [Mockoon](https://mockoon.com) to load, migrate and run
+environments. Mockpit is not affiliated with or endorsed by the Mockoon team. "Mockoon" is a
+registered trademark of its owner (EU trademark 018918009) and is used here only to describe
+compatibility. Mockpit does not use the Mockoon logo.
 
 ## @mockoon/commons and @mockoon/commons-server
 
@@ -22,15 +23,20 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 
 ## Other dependencies
 
-The server and the web interface also depend on the following packages, each distributed under
-its own licence (see the `LICENSE` file inside each package in `node_modules`):
+The server and the web interface also depend, directly or through the packages above, on other
+open-source packages. All of them are under permissive licences (MIT, ISC, BSD-2-Clause,
+BSD-3-Clause, 0BSD, BlueOak-1.0.0, Apache-2.0), with one exception under a weak copyleft licence:
 
-| Package                                                            | Licence |
-| ------------------------------------------------------------------ | ------- |
-| fastify, @fastify/cookie, @fastify/static                          | MIT     |
-| react, react-dom                                                   | MIT     |
-| react-router-dom                                                   | MIT     |
-| zustand                                                            | MIT     |
-| @dnd-kit/core, @dnd-kit/sortable, @dnd-kit/utilities               | MIT     |
-| @uiw/react-codemirror                                              | MIT     |
-| @codemirror/lang-json, @codemirror/lang-xml, @codemirror/lang-html | MIT     |
+| Package                                                           | Licence       | Note                                                                                   |
+| ----------------------------------------------------------------- | ------------- | -------------------------------------------------------------------------------------- |
+| @jmespath-community/jmespath                                      | MPL-2.0       | Used unmodified; source at <https://github.com/jmespath-community/typescript-jmespath> |
+| rxjs                                                              | Apache-2.0    | Used unmodified                                                                        |
+| glob, minimatch, minipass, lru-cache, path-scurry, sax            | BlueOak-1.0.0 |                                                                                        |
+| fastify, @fastify/cookie, @fastify/static                         | MIT           |                                                                                        |
+| react, react-dom, react-router-dom, zustand                       | MIT           |                                                                                        |
+| @dnd-kit/core, @dnd-kit/sortable, @dnd-kit/utilities              | MIT           |                                                                                        |
+| @uiw/react-codemirror, @codemirror/lang-json, lang-xml, lang-html | MIT           |                                                                                        |
+
+The full licence text of every package is in its own folder under `node_modules` (in the Docker
+image: `/app/apps/server/node_modules`). The complete list can be printed with
+`pnpm licenses list --prod`.

@@ -1,5 +1,5 @@
 import type { FastifyInstance } from 'fastify';
-import type { AuthStatus } from '@maketa/shared';
+import type { AuthStatus } from '@mockpit/shared';
 import type { App } from '../app.js';
 import { ApiError } from '../errors.js';
 import {

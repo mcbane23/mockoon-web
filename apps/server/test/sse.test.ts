@@ -1,5 +1,5 @@
 import http from 'node:http';
-import type { ServerEvent } from '@maketa/shared';
+import type { ServerEvent } from '@mockpit/shared';
 import { describe, expect, it } from 'vitest';
 import { getFreePort, makeApp, onCleanup, until } from './helpers.js';
 

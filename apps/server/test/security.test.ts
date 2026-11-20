@@ -1,7 +1,7 @@
 import fs from 'node:fs/promises';
 import os from 'node:os';
 import path from 'node:path';
-import type { AppState, AuthStatus } from '@maketa/shared';
+import type { AppState, AuthStatus } from '@mockpit/shared';
 import { describe, expect, it } from 'vitest';
 import type { App } from '../src/app.js';
 import { loadConfig } from '../src/config.js';
@@ -60,11 +60,11 @@ describe('without a password (loopback)', () => {
 
     expect(result.status).toBe(403);
     expect(result.json.error.code).toBe('FORBIDDEN_HOST');
-    expect(result.json.error.message).toContain('MAKETA_ALLOWED_HOSTS');
+    expect(result.json.error.message).toContain('MOCKPIT_ALLOWED_HOSTS');
   });
 
-  it('accepts IP addresses, localhost, the machine name and MAKETA_ALLOWED_HOSTS', async () => {
-    const app = await makeApp({ allowedHosts: ['maketa.lan'] });
+  it('accepts IP addresses, localhost, the machine name and MOCKPIT_ALLOWED_HOSTS', async () => {
+    const app = await makeApp({ allowedHosts: ['mockpit.lan'] });
     const machine = os.hostname();
     for (const host of [
       '127.0.0.1:3300',
@@ -74,8 +74,8 @@ describe('without a password (loopback)', () => {
       'localhost',
       machine,
       `${machine.toUpperCase()}.local:3300`,
-      'maketa.lan:3300',
-      'MAKETA.LAN',
+      'mockpit.lan:3300',
+      'MOCKPIT.LAN',
     ]) {
       expect((await call(app, '/api/state', { host })).status, host).toBe(200);
     }
@@ -161,7 +161,7 @@ describe('with a password', () => {
 
     const ok = await login(app, 'secret', { host: LAN_HOST });
     expect(ok.status).toBe(204);
-    expect(ok.setCookie).toMatch(/^maketa_session=v1\.[0-9a-f]{64};/);
+    expect(ok.setCookie).toMatch(/^mockpit_session=v1\.[0-9a-f]{64};/);
     expect(ok.setCookie).toContain(`Max-Age=${SESSION_MAX_AGE_SECONDS}`);
     expect(SESSION_MAX_AGE_SECONDS).toBe(400 * 24 * 60 * 60);
     expect(ok.setCookie).toContain('HttpOnly');
@@ -193,7 +193,7 @@ describe('with a password', () => {
 
     expect((await call(app, '/api/state', { host: LAN_HOST, cookie: tampered })).status).toBe(401);
     expect(
-      (await call(app, '/api/state', { host: LAN_HOST, cookie: 'maketa_session=v1.' })).status,
+      (await call(app, '/api/state', { host: LAN_HOST, cookie: 'mockpit_session=v1.' })).status,
     ).toBe(401);
   });
 
@@ -201,7 +201,7 @@ describe('with a password', () => {
     const app = await makeApp({ ...LAN, envPassword: 'secret' });
     const result = await call(app, '/api/auth/logout', { method: 'POST', host: LAN_HOST });
     expect(result.status).toBe(204);
-    expect(result.setCookie).toContain('maketa_session=;');
+    expect(result.setCookie).toContain('mockpit_session=;');
     expect(result.setCookie).toContain('Max-Age=0');
   });
 
@@ -264,7 +264,7 @@ describe('with a password', () => {
     expect(again.auth.password).toBe(stored.password);
   });
 
-  it('MAKETA_PASSWORD wins over auth.json and also protects a loopback host', async () => {
+  it('MOCKPIT_PASSWORD wins over auth.json and also protects a loopback host', async () => {
     const dataDir = await tempDir();
     await fs.writeFile(
       path.join(dataDir, 'auth.json'),
@@ -281,7 +281,7 @@ describe('with a password', () => {
   });
 });
 
-describe('MAKETA_AUTH', () => {
+describe('MOCKPIT_AUTH', () => {
   it('"off" on a non-loopback host needs no cookie and creates no auth.json', async () => {
     const app = await makeApp({ ...LAN, auth: 'off', envPassword: 'ignored' });
 
@@ -294,8 +294,8 @@ describe('MAKETA_AUTH', () => {
   });
 
   it('an unknown value is an error at start', () => {
-    expect(() => loadConfig({ MAKETA_AUTH: 'maybe' }, '/tmp')).toThrow(/MAKETA_AUTH/);
-    expect(loadConfig({ MAKETA_AUTH: 'off' }, '/tmp').auth).toBe('off');
+    expect(() => loadConfig({ MOCKPIT_AUTH: 'maybe' }, '/tmp')).toThrow(/MOCKPIT_AUTH/);
+    expect(loadConfig({ MOCKPIT_AUTH: 'off' }, '/tmp').auth).toBe('off');
     expect(loadConfig({}, '/tmp')).toMatchObject({
       auth: 'on',
       port: 3300,
@@ -305,8 +305,15 @@ describe('MAKETA_AUTH', () => {
       allowedHosts: [],
     });
     expect(
-      loadConfig({ MAKETA_ALLOWED_HOSTS: 'A.lan, b.lan ,', MAKETA_PORT: '5000' }, '/tmp'),
+      loadConfig({ MOCKPIT_ALLOWED_HOSTS: 'A.lan, b.lan ,', MOCKPIT_PORT: '5000' }, '/tmp'),
     ).toMatchObject({ allowedHosts: ['a.lan', 'b.lan'], port: 5000 });
-    expect(() => loadConfig({ MAKETA_PORT: 'abc' }, '/tmp')).toThrow(/MAKETA_PORT/);
+    expect(() => loadConfig({ MOCKPIT_PORT: 'abc' }, '/tmp')).toThrow(/MOCKPIT_PORT/);
+  });
+
+  it('still accepts the former MAKETA_* names, with MOCKPIT_* taking precedence', () => {
+    expect(
+      loadConfig({ MAKETA_PORT: '5000', MAKETA_AUTH: 'off', MAKETA_PASSWORD: 'old' }, '/tmp'),
+    ).toMatchObject({ port: 5000, auth: 'off', envPassword: 'old' });
+    expect(loadConfig({ MAKETA_PORT: '5000', MOCKPIT_PORT: '6000' }, '/tmp').port).toBe(6000);
   });
 });

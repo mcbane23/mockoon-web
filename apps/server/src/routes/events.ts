@@ -1,6 +1,6 @@
 import type { ServerResponse } from 'node:http';
 import type { FastifyInstance } from 'fastify';
-import type { ServerEvent } from '@maketa/shared';
+import type { ServerEvent } from '@mockpit/shared';
 import type { App } from '../app.js';
 
 const PING_INTERVAL_MS = 25_000;

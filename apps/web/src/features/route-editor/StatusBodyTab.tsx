@@ -22,7 +22,7 @@ type Props = {
   onChange: (patch: Partial<RouteResponse>) => void;
 };
 
-const HELP_KEY = 'maketa.templatingHelp';
+const HELP_KEY = 'mockpit.templatingHelp';
 
 const BODY_TYPES: [BodyTypes, string][] = [
   [BodyTypes.INLINE, S.body.inline],

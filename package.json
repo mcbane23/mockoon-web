@@ -1,5 +1,5 @@
 {
-  "name": "maketa",
+  "name": "mockpit",
   "version": "0.1.0",
   "private": true,
   "description": "Web UI for building and running mock APIs, powered by the open-source Mockoon engine",
@@ -19,7 +19,7 @@
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "check": "pnpm format:check && pnpm lint && pnpm typecheck && pnpm test",
-    "e2e": "pnpm --filter @maketa/e2e e2e"
+    "e2e": "pnpm --filter @mockpit/e2e e2e"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",

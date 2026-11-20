@@ -1,5 +1,5 @@
 import { CloneObject, type Environment } from '@mockoon/commons';
-import type { EnvironmentDetail, UiStatePatch } from '@maketa/shared';
+import type { EnvironmentDetail, UiStatePatch } from '@mockpit/shared';
 import { create } from 'zustand';
 import { api, errorText } from '../api/client';
 import { S } from '../strings';

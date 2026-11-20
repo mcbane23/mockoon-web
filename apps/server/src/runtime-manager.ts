@@ -1,7 +1,7 @@
 import path from 'node:path';
 import { IsEqual, type Environment, type Transaction } from '@mockoon/commons';
 import { MockoonServer } from '@mockoon/commons-server';
-import type { EnvironmentSummary, RuntimeStatus } from '@maketa/shared';
+import type { EnvironmentSummary, RuntimeStatus } from '@mockpit/shared';
 import type { Config } from './config.js';
 import type { EnvironmentStore, LoadedEnvironment } from './environment-store.js';
 import { ApiError, errorMessage } from './errors.js';
@@ -90,10 +90,10 @@ export class RuntimeManager {
     this.logs.drop(uuid);
   }
 
-  /** Message describing who uses the port, or null when it is free as far as Maketa knows. */
+  /** Message describing who uses the port, or null when it is free as far as Mockpit knows. */
   portConflict(uuid: string, port: number): string | null {
     if (port === this.config.port) {
-      return `Port ${port} is used by the Maketa UI`;
+      return `Port ${port} is used by the Mockpit UI`;
     }
     for (const [otherUuid, entry] of this.entries) {
       if (otherUuid !== uuid && entry.port === port && entry.status !== 'stopping') {

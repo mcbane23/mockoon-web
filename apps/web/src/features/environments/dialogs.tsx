@@ -1,4 +1,4 @@
-import type { EnvironmentSummary } from '@maketa/shared';
+import type { EnvironmentSummary } from '@mockpit/shared';
 import { useState } from 'react';
 import { errorText } from '../../api/client';
 import { Button } from '../../components/Button';
