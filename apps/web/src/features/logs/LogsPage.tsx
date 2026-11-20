@@ -1,5 +1,5 @@
 import { BINARY_BODY } from '@mockoon/commons';
-import type { LogEntry } from '@maketa/shared';
+import type { LogEntry } from '@stubhouse/shared';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { Link, useParams, useSearchParams } from 'react-router-dom';
 import { api, errorText } from '../../api/client';

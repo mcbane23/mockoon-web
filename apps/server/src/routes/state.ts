@@ -1,5 +1,5 @@
 import type { FastifyInstance } from 'fastify';
-import type { AppState } from '@maketa/shared';
+import type { AppState } from '@stubhouse/shared';
 import type { App } from '../app.js';
 import { SETTINGS_LIMITS } from '../settings-store.js';
 import { isValidSession, setSessionCookie } from '../security.js';

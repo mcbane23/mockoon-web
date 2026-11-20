@@ -1,5 +1,5 @@
 import type { Environment } from '@mockoon/commons';
-import type { UpdateEnvironmentResponse } from '@maketa/shared';
+import type { UpdateEnvironmentResponse } from '@stubhouse/shared';
 import { ApiClientError } from '../api/client';
 
 export type SaveState = 'saved' | 'dirty' | 'saving' | 'conflict' | 'error';

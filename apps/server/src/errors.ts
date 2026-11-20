@@ -1,4 +1,4 @@
-import type { ApiErrorBody } from '@maketa/shared';
+import type { ApiErrorBody } from '@stubhouse/shared';
 
 export class ApiError extends Error {
   constructor(

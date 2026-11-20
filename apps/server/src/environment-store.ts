@@ -6,7 +6,7 @@ import type {
   EnvironmentSummary,
   UiStatePatch,
   UpdateEnvironmentResponse,
-} from '@maketa/shared';
+} from '@stubhouse/shared';
 import { environmentsDir, type Config } from './config.js';
 import { loadEnvironmentFromText, validateClientEnvironment } from './environment-loader.js';
 import { ApiError, errorMessage, notFound } from './errors.js';
@@ -471,7 +471,7 @@ export class EnvironmentStore {
     });
     this.onPathsChanged();
 
-    // only files Maketa created itself may be deleted
+    // only files Stubhouse created itself may be deleted
     if (options.deleteFile && this.isManaged(loaded.path)) {
       await fs.rm(loaded.path, { force: true });
     }

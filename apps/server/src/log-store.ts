@@ -1,5 +1,5 @@
 import type { Transaction } from '@mockoon/commons';
-import type { LogEntry } from '@maketa/shared';
+import type { LogEntry } from '@stubhouse/shared';
 import type { EventBus } from './event-bus.js';
 import type { SettingsStore } from './settings-store.js';
 
@@ -14,7 +14,7 @@ const truncate = (body: unknown, limitBytes: number): { body: any; truncated: bo
   };
 };
 
-/** Ring buffer of request logs per environment, newest first. Lost when Maketa shuts down. */
+/** Ring buffer of request logs per environment, newest first. Lost when Stubhouse shuts down. */
 export class LogStore {
   private readonly logs = new Map<string, LogEntry[]>();
 

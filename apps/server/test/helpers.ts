@@ -3,7 +3,7 @@ import net from 'node:net';
 import os from 'node:os';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import type { ServerEvent } from '@maketa/shared';
+import type { ServerEvent } from '@stubhouse/shared';
 import { afterEach } from 'vitest';
 import { createApp, type App, type AppOptions } from '../src/app.js';
 import type { Config } from '../src/config.js';
@@ -28,7 +28,7 @@ export const onCleanup = (fn: () => Promise<void>) => {
 
 /** Temporary data directory, removed after the test. */
 export async function tempDir(): Promise<string> {
-  const directory = await fs.mkdtemp(path.join(os.tmpdir(), 'maketa-test-'));
+  const directory = await fs.mkdtemp(path.join(os.tmpdir(), 'stubhouse-test-'));
   onCleanup(() => fs.rm(directory, { recursive: true, force: true }));
 
   return directory;

@@ -3,7 +3,7 @@
  * The interface is in English so that terms match the Mockoon documentation.
  */
 export const S = {
-  appName: 'Maketa',
+  appName: 'Stubhouse',
   common: {
     cancel: 'Cancel',
     close: 'Close',
@@ -32,7 +32,7 @@ export const S = {
   },
   validation: {
     portRange: 'Port must be a whole number between 1 and 65535',
-    portIsUi: (port: number) => `Port ${port} is used by the Maketa UI`,
+    portIsUi: (port: number) => `Port ${port} is used by the Stubhouse UI`,
     portShared: (name: string) => `Environment "${name}" uses the same port`,
     nameRequired: 'Name is required',
     nameTooLong: (max: number) => `Name can be at most ${max} characters`,
@@ -60,7 +60,7 @@ export const S = {
     externalReloaded: 'The environment was reloaded because its file changed on disk',
   },
   login: {
-    title: 'Log in to Maketa',
+    title: 'Log in to Stubhouse',
     password: 'Password',
     submit: 'Log in',
     hint: 'The password is in the file data/auth.json on the server.',
@@ -102,7 +102,7 @@ export const S = {
     openTitle: 'Open environment file',
     openPath: 'Absolute path on the server to a Mockoon environment file (.json)',
     openHelp:
-      'The file is edited in place. The path is on the machine where Maketa runs, not on this one. To add a file from this computer use Import.',
+      'The file is edited in place. The path is on the machine where Stubhouse runs, not on this one. To add a file from this computer use Import.',
     closeTitle: (name: string) => `Close "${name}"?`,
     closeBody: 'The environment is removed from the list. If it is running it will be stopped.',
     closeDeleteFile: 'Also delete the file from disk',
@@ -247,7 +247,7 @@ export const S = {
     filePath: 'File path',
     filePathPlaceholder: './responses/users.json',
     filePathHelp:
-      'Absolute path, or relative to the folder of the environment file. The path refers to the computer Maketa runs on. Templating is supported.',
+      'Absolute path, or relative to the folder of the environment file. The path refers to the computer Stubhouse runs on. Templating is supported.',
     sendFileAsBody: 'Send as body (no Content-Disposition)',
     fallbackTo404: 'Fallback to 404 if the file is missing',
     selectBucket: 'Select a data bucket',
@@ -407,13 +407,13 @@ export const S = {
     randomLatencyHelp: 'Latency is random between 0 and the configured value.',
     nextStart: 'Applies the next time an environment is started.',
     info: 'About',
-    version: 'Maketa version',
+    version: 'Stubhouse version',
     engineVersion: 'Engine version',
     dataDir: 'Data directory',
     auth: 'Authentication',
     logout: 'Log out',
     authEnabledHelp:
-      'The login does not expire. Change the password in data/auth.json on the server or with the MAKETA_PASSWORD variable, then restart. Set MAKETA_AUTH=off to turn the password off.',
+      'The login does not expire. Change the password in data/auth.json on the server or with the STUBHOUSE_PASSWORD variable, then restart. Set STUBHOUSE_AUTH=off to turn the password off.',
     authDisabled: 'Authentication is disabled on this server',
     back: 'Back',
   },

@@ -1,4 +1,4 @@
-import type { AppState, EnvironmentSummary } from '@maketa/shared';
+import type { AppState, EnvironmentSummary } from '@stubhouse/shared';
 import { create } from 'zustand';
 import { api } from '../api/client';
 

@@ -4,7 +4,7 @@ import type {
   UiStatePatch,
   UpdateEnvironmentRequest,
   UpdateEnvironmentResponse,
-} from '@maketa/shared';
+} from '@stubhouse/shared';
 import type { App } from '../app.js';
 
 const uuidParams = {

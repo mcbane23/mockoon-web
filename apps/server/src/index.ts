@@ -33,7 +33,7 @@ async function main(): Promise<void> {
   const app = await createApp(config);
   await app.fastify.listen({ port: config.port, host: config.host });
 
-  logger.info(`Maketa ${app.appVersion} (engine ${app.engineVersion})`);
+  logger.info(`Stubhouse ${app.appVersion} (engine ${app.engineVersion})`);
   for (const address of uiAddresses(config.host, config.port)) {
     logger.info(`UI: ${address}`);
   }
@@ -77,16 +77,16 @@ main().catch((error) => {
   if (error instanceof ConfigError) {
     logger.error(error.message);
   } else if ((error as { code?: string } | null)?.code === 'EADDRINUSE') {
-    logger.error('The UI port is already in use. Set MAKETA_PORT to another port.');
+    logger.error('The UI port is already in use. Set STUBHOUSE_PORT to another port.');
   } else if (isListenDenied(error)) {
     logger.error(
       `The system does not allow listening on ${error.address}:${error.port}. ` +
-        'Set MAKETA_PORT to another port. On Windows the port may be in a reserved range ' +
+        'Set STUBHOUSE_PORT to another port. On Windows the port may be in a reserved range ' +
         '(see "netsh interface ipv4 show excludedportrange protocol=tcp"); ' +
         'on Linux and macOS ports below 1024 need elevated rights.',
     );
   } else {
-    logger.error('Maketa could not start', error);
+    logger.error('Stubhouse could not start', error);
   }
   process.exit(1);
 });

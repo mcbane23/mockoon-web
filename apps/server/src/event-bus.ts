@@ -1,5 +1,5 @@
 import { EventEmitter } from 'node:events';
-import type { ServerEvent } from '@maketa/shared';
+import type { ServerEvent } from '@stubhouse/shared';
 
 export type ServerEventListener = (event: ServerEvent) => void;
 

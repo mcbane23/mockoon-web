@@ -7,11 +7,11 @@ export type Config = {
   host: string;
   /** Absolute path of the data directory. */
   dataDir: string;
-  /** Value of MAKETA_PASSWORD, or null when not set. */
+  /** Value of STUBHOUSE_PASSWORD, or null when not set. */
   envPassword: string | null;
-  /** MAKETA_AUTH. */
+  /** STUBHOUSE_AUTH. */
   auth: 'on' | 'off';
-  /** MAKETA_ALLOWED_HOSTS, lower-cased. */
+  /** STUBHOUSE_ALLOWED_HOSTS, lower-cased. */
   allowedHosts: string[];
   /** Development mode: also accepts requests coming through the Vite dev server. */
   dev: boolean;
@@ -26,32 +26,49 @@ export const isLoopbackHost = (host: string): boolean =>
 
 export class ConfigError extends Error {}
 
+const ENV_NAMES = ['PORT', 'HOST', 'DATA_DIR', 'PASSWORD', 'AUTH', 'ALLOWED_HOSTS'] as const;
+
+/**
+ * Reads the STUBHOUSE_* variables. The application used to be called Maketa, so a MAKETA_*
+ * variable is still accepted when its STUBHOUSE_* counterpart is not set.
+ */
+function readEnv(env: Record<string, string | undefined>) {
+  const values: Record<string, string | undefined> = {};
+  for (const name of ENV_NAMES) {
+    values[`STUBHOUSE_${name}`] = env[`STUBHOUSE_${name}`] ?? env[`MAKETA_${name}`];
+  }
+  return values;
+}
+
 export function loadConfig(
-  env: Record<string, string | undefined> = process.env,
+  processEnv: Record<string, string | undefined> = process.env,
   cwd: string = process.cwd(),
 ): Config {
-  const rawPort = env.MAKETA_PORT?.trim();
+  const env = readEnv(processEnv);
+  const rawPort = env.STUBHOUSE_PORT?.trim();
   const port = rawPort ? Number(rawPort) : 3300;
   if (!Number.isInteger(port) || port < 1 || port > 65535) {
-    throw new ConfigError(`MAKETA_PORT must be an integer between 1 and 65535 (got "${rawPort}")`);
+    throw new ConfigError(
+      `STUBHOUSE_PORT must be an integer between 1 and 65535 (got "${rawPort}")`,
+    );
   }
 
-  const auth = (env.MAKETA_AUTH?.trim() || 'on').toLowerCase();
+  const auth = (env.STUBHOUSE_AUTH?.trim() || 'on').toLowerCase();
   if (auth !== 'on' && auth !== 'off') {
-    throw new ConfigError(`MAKETA_AUTH must be "on" or "off" (got "${env.MAKETA_AUTH}")`);
+    throw new ConfigError(`STUBHOUSE_AUTH must be "on" or "off" (got "${env.STUBHOUSE_AUTH}")`);
   }
 
   return {
     port,
-    host: env.MAKETA_HOST?.trim() || '0.0.0.0',
-    dataDir: path.resolve(cwd, env.MAKETA_DATA_DIR?.trim() || './data'),
-    envPassword: env.MAKETA_PASSWORD ? env.MAKETA_PASSWORD : null,
+    host: env.STUBHOUSE_HOST?.trim() || '0.0.0.0',
+    dataDir: path.resolve(cwd, env.STUBHOUSE_DATA_DIR?.trim() || './data'),
+    envPassword: env.STUBHOUSE_PASSWORD ? env.STUBHOUSE_PASSWORD : null,
     auth,
-    allowedHosts: (env.MAKETA_ALLOWED_HOSTS ?? '')
+    allowedHosts: (env.STUBHOUSE_ALLOWED_HOSTS ?? '')
       .split(',')
       .map((host) => host.trim().toLowerCase())
       .filter(Boolean),
-    dev: env.NODE_ENV === 'development',
+    dev: processEnv.NODE_ENV === 'development',
     webDistDir: null,
   };
 }

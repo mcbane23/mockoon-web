@@ -1,5 +1,5 @@
 import { BuildEnvironment, type Environment } from '@mockoon/commons';
-import type { UpdateEnvironmentResponse } from '@maketa/shared';
+import type { UpdateEnvironmentResponse } from '@stubhouse/shared';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { ApiClientError } from '../src/api/client';
 import {

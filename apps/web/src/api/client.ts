@@ -11,7 +11,7 @@ import type {
   LogEntry,
   UiStatePatch,
   UpdateEnvironmentResponse,
-} from '@maketa/shared';
+} from '@stubhouse/shared';
 
 export class ApiClientError extends Error {
   constructor(

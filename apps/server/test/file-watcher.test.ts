@@ -1,6 +1,6 @@
 import fs from 'node:fs/promises';
 import { CloneObject, type Environment } from '@mockoon/commons';
-import type { ServerEvent } from '@maketa/shared';
+import type { ServerEvent } from '@stubhouse/shared';
 import { describe, expect, it } from 'vitest';
 import { makeApp, sleep, waitForEvent } from './helpers.js';
 

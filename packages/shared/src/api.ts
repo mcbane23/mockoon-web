@@ -11,7 +11,7 @@ export type EnvironmentSummary = {
   endpointPrefix: string;
   tlsEnabled: boolean;
   path: string;
-  /** True when the file lives in the data directory managed by Maketa (can be deleted on close). */
+  /** True when the file lives in the data directory managed by Stubhouse (can be deleted on close). */
   managed: boolean;
   revision: number;
   status: RuntimeStatus;

@@ -7,7 +7,7 @@ import { RouteEditor } from '../route-editor/RouteEditor';
 import styles from './RoutesPage.module.css';
 import { RoutesTree } from './RoutesTree';
 
-const WIDTH_KEY = 'maketa.routesWidth';
+const WIDTH_KEY = 'stubhouse.routesWidth';
 const MIN_WIDTH = 200;
 const MAX_WIDTH = 640;
 const DEFAULT_WIDTH = 300;

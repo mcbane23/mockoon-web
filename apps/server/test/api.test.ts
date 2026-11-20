@@ -7,7 +7,7 @@ import type {
   EnvironmentDetail,
   EnvironmentSummary,
   LogEntry,
-} from '@maketa/shared';
+} from '@stubhouse/shared';
 import { describe, expect, it } from 'vitest';
 import type { App } from '../src/app.js';
 import { fixturesDir, getFreePort, makeApp, readFixture, tempDir, until } from './helpers.js';
@@ -361,18 +361,18 @@ describe('HTTP API', () => {
 
   it('serves the built UI and falls back to index.html', async () => {
     const webDistDir = await tempDir();
-    await fs.writeFile(path.join(webDistDir, 'index.html'), '<html>maketa</html>');
+    await fs.writeFile(path.join(webDistDir, 'index.html'), '<html>stubhouse</html>');
     await fs.mkdir(path.join(webDistDir, 'assets'));
     await fs.writeFile(path.join(webDistDir, 'assets', 'app.js'), 'console.log(1)');
     const app = await makeApp({ webDistDir });
 
-    expect((await call(app, 'GET', '/')).text).toContain('maketa');
-    expect((await call(app, 'GET', '/env/123/routes')).text).toContain('maketa');
+    expect((await call(app, 'GET', '/')).text).toContain('stubhouse');
+    expect((await call(app, 'GET', '/env/123/routes')).text).toContain('stubhouse');
     expect((await call(app, 'GET', '/assets/app.js')).text).toBe('console.log(1)');
     expect((await call(app, 'GET', '/api/unknown')).status).toBe(404);
     // a missing file is a 404, not the application shell
     const missing = await call(app, 'GET', '/assets/missing.js');
     expect(missing.status).toBe(404);
-    expect(missing.text).not.toContain('maketa');
+    expect(missing.text).not.toContain('stubhouse');
   });
 });

@@ -1,6 +1,6 @@
 import { useCallback, useState } from 'react';
 import { Outlet, useNavigate, useOutletContext } from 'react-router-dom';
-import type { EnvironmentSummary } from '@maketa/shared';
+import type { EnvironmentSummary } from '@stubhouse/shared';
 import { Toasts } from '../../components/Toasts';
 import { useAppStore } from '../../store/app-store';
 import { S } from '../../strings';
