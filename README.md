@@ -44,6 +44,14 @@ The password is stored in /home/me/mockpit/data/auth.json
 
 Open the address in a browser on any machine in the network and log in with that password.
 
+### Ready-made package
+
+Every merge to `main` is published as a
+[release](https://github.com/mcbane23/mockoon-web/releases/latest) with a `mockpit-<version>.zip`
+attached. It holds the built application with its dependencies, so it needs only Node.js 22 or
+newer: unpack it and run `start.cmd` (Windows) or `./start.sh` (Linux, macOS). Data is kept in
+the `data` folder inside the unpacked folder.
+
 ### Docker
 
 An image is published to the GitHub Container Registry on every merge to `main`
