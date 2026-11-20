@@ -80,9 +80,15 @@ export class EnvironmentStore {
    * Failures keep the last valid version and set fileError.
    */
   private async readFromDisk(loaded: LoadedEnvironment, force: boolean): Promise<boolean> {
+    const revisionBefore = loaded.revision;
     let text: string;
     try {
       text = await fs.readFile(loaded.path, 'utf8');
+      if (!force && (loaded.revision !== revisionBefore || this.hasPendingSave(loaded.uuid))) {
+        // the environment was updated while the file was being read: what was read is stale,
+        // and our own write replaces it anyway
+        return false;
+      }
     } catch (error) {
       loaded.fileError = isENOENT(error)
         ? 'File no longer exists'
