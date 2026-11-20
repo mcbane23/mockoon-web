@@ -24,6 +24,22 @@ describe('FileWatcher', () => {
     expect(app.store.summary(environment.uuid).fileError).toBeNull();
   });
 
+  it('an update that arrives while the file is being read is not reverted', async () => {
+    const app = await makeApp();
+    const { environment } = await app.store.create({ name: 'Before' });
+    const { uuid } = environment;
+
+    // a late watcher notification for our own earlier write starts reading the old file...
+    const stale = app.store.handleExternalChange(uuid);
+    // ...and the client saves a newer version before that read finishes
+    const changed: Environment = { ...CloneObject(environment), name: 'After' };
+    const update = app.store.update(uuid, changed, 1, 'client-a');
+    await Promise.all([stale, update]);
+
+    expect(app.store.get(uuid).environment?.name).toBe('After');
+    expect(app.store.get(uuid).revision).toBe(2);
+  });
+
   it('keeps the known uuid when the file content has another one', async () => {
     const app = await makeApp();
     const { environment, summary } = await app.store.create({});

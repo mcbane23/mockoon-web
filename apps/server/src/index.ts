@@ -20,6 +20,12 @@ function uiAddresses(host: string, port: number): string[] {
   return addresses.length > 0 ? addresses : [`http://localhost:${port}`];
 }
 
+type ListenError = { code: string; syscall: string; address: string; port: number };
+
+const isListenDenied = (error: unknown): error is ListenError =>
+  (error as Partial<ListenError> | null)?.code === 'EACCES' &&
+  (error as Partial<ListenError>).syscall === 'listen';
+
 async function main(): Promise<void> {
   const config = loadConfig();
   config.webDistDir = path.resolve(import.meta.dirname, '../../web/dist');
@@ -72,6 +78,13 @@ main().catch((error) => {
     logger.error(error.message);
   } else if ((error as { code?: string } | null)?.code === 'EADDRINUSE') {
     logger.error('The UI port is already in use. Set MAKETA_PORT to another port.');
+  } else if (isListenDenied(error)) {
+    logger.error(
+      `The system does not allow listening on ${error.address}:${error.port}. ` +
+        'Set MAKETA_PORT to another port. On Windows the port may be in a reserved range ' +
+        '(see "netsh interface ipv4 show excludedportrange protocol=tcp"); ' +
+        'on Linux and macOS ports below 1024 need elevated rights.',
+    );
   } else {
     logger.error('Maketa could not start', error);
   }

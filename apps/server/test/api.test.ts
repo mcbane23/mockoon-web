@@ -18,7 +18,7 @@ const call = async <T = any>(app: App, method: Method, url: string, payload?: un
   const response = await app.fastify.inject({
     method,
     url,
-    headers: { host: 'localhost:4400', 'x-client-id': 'test-client' },
+    headers: { host: 'localhost:3300', 'x-client-id': 'test-client' },
     ...(payload === undefined ? {} : { payload: payload as object }),
   });
   const text = response.body;
@@ -48,7 +48,7 @@ describe('HTTP API', () => {
     expect(json.authRequired).toBe(false);
     expect(json.engineVersion).toBe('9.10.0');
     expect(json.appVersion).toMatch(/^\d+\.\d+\.\d+/);
-    expect(json.uiPort).toBe(4400);
+    expect(json.uiPort).toBe(3300);
     expect(json.dataDir).toBe(app.config.dataDir);
     expect(json.nextFreePort).toBe(3002);
     expect(json.settings).toEqual({

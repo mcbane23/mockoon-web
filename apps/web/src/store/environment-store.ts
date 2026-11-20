@@ -128,10 +128,16 @@ export const useEnvironmentStore = create<EnvironmentStore>((set, get) => {
         return;
       }
       const token = ++loadToken;
+      const { saveState: stateBefore, version: versionBefore } = get();
       saveQueue.reset();
       try {
         const detail = await api.getEnvironment(uuid);
         if (token === loadToken && get().uuid === uuid) {
+          if (stateBefore === 'saved' && get().version !== versionBefore) {
+            // edited while the reload was in flight: keep the edits. If the server really has
+            // a newer revision, saving them reports the conflict.
+            return;
+          }
           applyDetail(detail);
         }
       } catch (error) {

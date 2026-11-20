@@ -31,7 +31,7 @@ export function loadConfig(
   cwd: string = process.cwd(),
 ): Config {
   const rawPort = env.MAKETA_PORT?.trim();
-  const port = rawPort ? Number(rawPort) : 4400;
+  const port = rawPort ? Number(rawPort) : 3300;
   if (!Number.isInteger(port) || port < 1 || port > 65535) {
     throw new ConfigError(`MAKETA_PORT must be an integer between 1 and 65535 (got "${rawPort}")`);
   }
