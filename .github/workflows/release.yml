@@ -1,0 +1,46 @@
+name: Release
+
+# Every merge to main becomes a release with the packaged application attached.
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: release
+  cancel-in-progress: false
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+
+      # The version in package.json is used when it is ahead of the latest release
+      # (a deliberate minor or major bump); otherwise the patch number goes up by one.
+      - id: version
+        run: echo "version=$(scripts/next-version.sh)" >> "$GITHUB_OUTPUT"
+
+      - run: pnpm build
+      - run: scripts/package-release.sh "${{ steps.version.outputs.version }}"
+
+      - name: Publish the release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          VERSION: ${{ steps.version.outputs.version }}
+        run: |
+          gh release create "v$VERSION" "release/mockpit-$VERSION.zip" \
+            --target "$GITHUB_SHA" \
+            --title "Mockpit $VERSION" \
+            --generate-notes
